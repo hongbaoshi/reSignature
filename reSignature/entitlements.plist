@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>application-identifier</key>
+	<string>KHKZ8WJ659.com.taifenggame.test</string>
+	<key>aps-environment</key>
+	<string>development</string>
+	<key>com.apple.developer.team-identifier</key>
+	<string>KHKZ8WJ659</string>
+	<key>get-task-allow</key>
+	<true/>
+	<key>keychain-access-groups</key>
+	<string>KHKZ8WJ659.*</string>
+</dict>
+</plist>
