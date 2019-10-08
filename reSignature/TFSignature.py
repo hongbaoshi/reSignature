@@ -161,8 +161,16 @@ def getP12Name(cer_path,cer_password):
 
     print('dev证书名称:',dev_p12Name)
     if len(dev_p12Name)<10:
-        print('\n ----------------------- 证书名称读取失败，不过没啥影响😄 -----------------------\n')
-        time.sleep(3)
+        print('\n ----------------------- 证书名称读取失败，终止程序，手动输入证书名称 -----------------------\n')
+        print('\n\n')
+
+        message = ''
+        message = input("请输入改证书的名称(如：iPhone Developer: Chen Lili (MV7Y75X353))：")
+        if len(message)>9:
+            dev_p12Name = message
+        else:
+            print('请输入正确的证书名称\n\n')
+            exit()
     print('获取证书名称结束\n\n')
 
 
@@ -216,6 +224,7 @@ def resign(ipa_path,cer_path,cer_password,mobile_path):
     print('---------------------- 开始重签名')
     #解压ipa包
     unzipIpa(ipa_path)
+    # exit()
 
     #获取.app的绝对路径
     appPath = getAppPath()
@@ -236,12 +245,16 @@ def resign(ipa_path,cer_path,cer_password,mobile_path):
     changeEntitlementsPlistinfo()
     # message = input("骚等......")
 
-    #给动态库重签名
-    frameworksPath = os.listdir(appPath + '/Frameworks')
+    #给动态库重签名,
+    #这个地方需要判断是否存在动态库
     current_path = os.path.abspath(os.path.split(__file__)[0])
-    for frameworkPath in frameworksPath:
-         # 给Frameworks签名
-        codesign(dev_p12Name,current_path+'/entitlements.plist',appPath + '/Frameworks' +'/'+ frameworkPath)
+    if os.path.exists(appPath + '/Frameworks'):
+        frameworksPath = os.listdir(appPath + '/Frameworks')
+        for frameworkPath in frameworksPath:
+             # 给Frameworks签名
+            codesign(dev_p12Name,current_path+'/entitlements.plist',appPath + '/Frameworks' +'/'+ frameworkPath)
+    else:
+        print('------------------- 没有需要重签的动态库')
 
     #给.app重签名
     codesign(dev_p12Name,current_path+'/entitlements.plist',appPath)
