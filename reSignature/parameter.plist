@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>channelCFBundleIdentifier</key>
+	<string></string>
+	<key>channelCFBundleDisplayName</key>
+	<string></string>
+	<key>channelCFBundleShortVersionString</key>
+	<string></string>
+	<key>channelCFBundleVersion</key>
+	<string></string>
+</dict>
+</plist>

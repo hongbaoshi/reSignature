@@ -44,6 +44,38 @@ def codesign(certifierName,eplistPath,signPath):
     process.wait()
 
 
+
+def changeSomeParameter(plist_file,InfoPlist_file):
+    print('--------------- 修改工程相关参数')
+    if os.path.exists(plist_file):
+        readPlists = plistlib.readPlist(plist_file)
+        bundleIdentifier = readPlists['channelCFBundleIdentifier']
+        bundleDisplayName = readPlists['channelCFBundleDisplayName']
+        bundleShortVersion = readPlists['channelCFBundleShortVersionString']
+        bundleVersion = readPlists['channelCFBundleVersion']
+        if len(bundleIdentifier) > 0:
+            changePlistinfo(InfoPlist_file,'CFBundleIdentifier',bundleIdentifier)
+        else:
+            print('不需要修改包id')
+
+        if len(bundleDisplayName) > 0:
+            changePlistinfo(InfoPlist_file,'CFBundleDisplayName',bundleDisplayName)
+        else:
+            print('不需要修改包名称')
+
+        if len(bundleShortVersion) > 0:
+            changePlistinfo(InfoPlist_file,'CFBundleShortVersionString',bundleShortVersion)
+        else:
+            print('不需要修改包版本')
+
+        if len(bundleVersion) > 0:
+            changePlistinfo(InfoPlist_file,'CFBundleVersion',bundleVersion)
+        else:
+            print('不需要修改包bundle版本')
+    else:
+        print('-----------------------------  不需要修改工程参数')
+    print('------------ 参数修改完成\n\n')
+
 #修改plist文件里的数据
 #plist_file 文件路径
 #change_name  需要修改的键
@@ -218,6 +250,7 @@ def unzipIpa(ipaPath):
 
 
 
+
 #重签名流程
 def resign(ipa_path,cer_path,cer_password,mobile_path):
     global dev_p12Name
@@ -244,6 +277,11 @@ def resign(ipa_path,cer_path,cer_password,mobile_path):
     #修改entitlements.plist的内容
     changeEntitlementsPlistinfo()
     # message = input("骚等......")
+
+
+    #判断是否需要修改游戏名称、bundleid、游戏Version、游戏build version -------- 这四个值默认为空，不修改
+    changeSomeParameter('parameter.plist',appPath+'/Info.plist')
+
 
     #给动态库重签名,
     #这个地方需要判断是否存在动态库
